@@ -10,6 +10,7 @@ const Header=()=> {
   
   const [{basket},dispatch]=
   useContext(DataContext)
+  const total = basket.reduce((amount,item)=>{ return item.price + amount},0)
   console.log(basket.length);
   return (
     <>
@@ -54,23 +55,8 @@ const Header=()=> {
                   <option value="">EN</option>
                 </select>
               </Link>
-              {/* <Link to={!user && "/auth"}>
-                <div>
-                  {user ? (
-                    <>
-                      <p>Hello {user?.email?.split("@")[0]}</p>
-                      <span onClick={() => (user ? auth.signOut() : null)}>
-                        Sign Out
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <p>Hello, Sign In</p>
-                      <span>Account & Lists</span>
-                    </>
-                  )}
-                </div>
-              </Link> */}
+
+
               <Link to="/orders">
                 <p>returns</p>
                 <span>& Orders</span>
