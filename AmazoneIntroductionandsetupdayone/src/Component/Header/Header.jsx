@@ -10,7 +10,7 @@ const Header=()=> {
   
   const [{basket},dispatch]=
   useContext(DataContext)
-  const total = basket.reduce((amount,item)=>{ return item.price + amount},0)
+  const total = basket.reduce((amount,item)=>{ return item.amount + amount},0)
   console.log(basket.length);
   return (
     <>
@@ -56,14 +56,13 @@ const Header=()=> {
                 </select>
               </Link>
 
-
               <Link to="/orders">
                 <p>returns</p>
                 <span>& Orders</span>
               </Link>
               <Link to="/cart" className={classes.cart}>
                 <BiCart size={35} />
-                <span>basket.length</span>
+                <span>{total}</span>
               </Link>
             </div>
           </div>

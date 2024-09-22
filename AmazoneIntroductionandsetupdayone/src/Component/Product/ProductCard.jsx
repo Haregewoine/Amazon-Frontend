@@ -23,9 +23,6 @@ function ProductCard({ product, flex, renderDesc }) {
   }
 
 
-
-
-
   return (
     <div
       className={`${classes.card__container} ${
@@ -47,7 +44,7 @@ function ProductCard({ product, flex, renderDesc }) {
           <CurrencyFormat amount={price} />
         </div>
 
-        {/* Uncomment if you want to add the Add to Cart functionality */}
+        
         <button className={classes.button} onClick={() => addToCart(product)}>
           Add to Cart
         </button>

@@ -5,19 +5,22 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { productUrl } from "../../Api/EndPoint.jsx";
 import ProductCard from "../../Component/Product/ProductCard";
-//import ProductCard from "../../Component/ProductCard/ProductCard"; // Importing ProductCard
+
 import Loading from "../../Component/Loading/Loading.jsx"
 function Results() {
   const [results, setResults] = useState([]); // Fixed SetResults to setResults
   const { categoryName } = useParams();
  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true)
     axios
       .get(`${productUrl}/products/category/${categoryName}`)
       .then((res) => {
-        setResults(res.data); // Fixed SetResults to setResults
+        setResults(res.data);
+        setIsLoading(false) // Fixed SetResults to setResults
       })
       .catch((err) => {
+        setIsLoading(false)
         console.error("Error fetching the products: ", err); // Added error handling
       });
   }, [categoryName]); // Added categoryName to the dependency array
