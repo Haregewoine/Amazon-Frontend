@@ -61,7 +61,7 @@ const Header = () => {
             {/* Account Sign In */}
             <Link to={!user && "/auth"}>
               <div>
-                {user ? (
+                {user ?  (
                   <>
                     <p>Hello {user?.email?.split("@")[0]}</p>
                     <span onClick={() => auth.signOut()}>Sign Out</span>
