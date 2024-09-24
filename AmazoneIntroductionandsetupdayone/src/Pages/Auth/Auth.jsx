@@ -1,48 +1,75 @@
-import React from "react";
+import React ,{ useState,useContext }from "react";
 import classes from "./Signup.module.css";
-import { Link } from "@mui/material";
+// import { Link } from "@mui/material";
+import { Link , useNavigate } from "react-router-dom";
 import { auth } from "../../utility/Fairebase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
+import { ClipLoader } from "react-spinners";  
+import { DataContext } from "../../Component/DataProvider/DataProvider";
 
 function Auth() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
 
+const [Loding,setLoding]=useState({
+  signIn:false,
+  signup:false})
+
+  const [{user }, dispatch] = useContext(DataContext);
+  const navigate = useNavigate();
+  //console.log(user);
   const authHandler = async (e) => {
     e.preventDefault(); // Fixing the typo
     console.log(e.target.name);
 
     if (e.target.name === "signIn") {
+setLoding({...Loding, signIn:true })
       // Sign In with Firebase Auth
       signInWithEmailAndPassword(auth, email, password)
         .then((userInfo) => {
-          console.log(userInfo);
+     dispatch({
+            type: Type.set_user,
+            user: userInfo.user,
+          });
+setLoding({...Loding,signIn:false})
+navigate("/");
+
         })
         .catch((err) => {
-          console.log(err);
           setError(err.message);
+          setLoding({ ...Loding, signIn: false });
         });
     } else {
       // Sign Up with Firebase Auth
+      setLoding({ ...Loding,signup:true})
       createUserWithEmailAndPassword(auth, email, password)
         .then((userInfo) => {
-          console.log(userInfo);
+       dispatch({
+            type: Type.set_user,
+            user: userInfo.user,
+          });
+          setLoding({ ...Loding, signup: false });
+
+          navigate("/");
         })
+          
+      
         .catch((err) => {
-          console.log(err);
+        
           setError(err.message);
+          setLoding({ ...Loding, signup: false });
         });
     }
   };
-
+// **********************************************************
   return (
     <section className={classes.login}>
       {/* logo */}
-      <Link>
+      <Link to={"/"} >
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"
           alt="amazon logo"
@@ -77,7 +104,8 @@ function Auth() {
             name="signIn" // This is for the sign-in action
             className={classes.login__signInButton}
           >
-            Sign In
+            {Loding.signIn ? <ClipLoader color="white" size={20} /> : "Sign In"}
+            {/* Sign In */}
           </button>
         </form>
         {/* agreement */}
@@ -92,14 +120,33 @@ function Auth() {
           name="signup" // This is for the sign-up action
           className={classes.login__registerButton}
         >
-          Create your Amazon Account
+          {Loding.signup ? (
+            <ClipLoader color="white" size={20} />
+          ) : (
+            "Create your Amazon Account"
+          )}
         </button>
+
+        {error && (
+          <small style={{ paddingTop: "5px", color: "red" }}>{error}</small>
+        )}
       </div>
     </section>
   );
 }
 
 export default Auth;
+
+
+
+
+
+
+
+
+
+
+
 
 // import React from "react";
 // import classes from "./Signup.module.css";
