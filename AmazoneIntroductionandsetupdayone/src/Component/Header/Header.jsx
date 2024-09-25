@@ -64,7 +64,7 @@ const Header = () => {
               onClick={() => user && auth.signOut()}
             >
               <div>
-                <p>{user ? `Hello, ${user.email.split("@")[0]}` : "Sign in"}</p>
+                <p>{user ? `Hello, ${user.email.split("@")[0]}` : " Hello, Sign in"}</p>
                 <span>{user ? "Sign Out" : "Account & Lists"}</span>
               </div>
             </Link>
