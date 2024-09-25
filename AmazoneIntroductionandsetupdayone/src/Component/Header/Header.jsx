@@ -12,7 +12,7 @@ const Header = () => {
   const [{ basket, user }, dispatch] = useContext(DataContext);
 
   const totalItem =
-    basket?.reduce((amount, item) => item.amount + amount, 0) || 0;
+    basket?.reduce((amount, item) =>  item.amount + amount, 0) || 0;
 
   return (
     <section className={classes.fixed}>
