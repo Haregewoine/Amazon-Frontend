@@ -20,16 +20,17 @@ app.post("/payments/create", async (req, res) => {
   const total = req.query.total;
 
   if (total > 0) {
-    console.log("payment received", total);
-    res.send(total);
-
-    // const paymentIntent = await stripe.paymentIntents.create({
-    //     amount: total, // subunits of the currency
-    //     currency: "usd",
-    // });
-    // res.status(201).send({
-    //     clientSecret: paymentIntent.client_secret,
-    // });
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: total,
+      currency: "usd",
+    });
+    
+  
+    res.status(201).json(paymentIntent.client_secret,);
+  } else {
+    res.status(403).json({
+      message: "total must be greater than 0",
+    });
   }
 });
 exports.api = onRequest(app);
