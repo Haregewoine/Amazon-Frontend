@@ -34,7 +34,7 @@ function ProductCard({ product, flex, renderDesc }) {
       </Link>
       <div>
         <h3>{title}</h3>
-        <p>{renderDesc && <div>{description}</div>}</p>
+        {renderDesc && <div>{description}</div>}
         <div className={classes.rating}>
           <Rating value={rating?.rate} precision={0.1} />
           <small>{rating?.count}</small>

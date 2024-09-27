@@ -1,4 +1,4 @@
- import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Landing from "./Pages/Landing/Landing";
 import Auth from "./Pages/Auth/Auth";
 import Payment from "./Pages/Payment/Payment";
@@ -6,10 +6,13 @@ import Orders from "./Pages/Orders/Orders";
 import Cart from "./Pages/Cart/Cart";
 import Results from "./Pages/Results/Results";
 import ProductDetail from "./Pages/ProductDetail/ProductDetail";
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import ProtectedRoute from "./Component/protectedRout/ProtectedRoute";
 
-const stripePromise = loadStripe("pk_test_51Q2glIK3wgFMMLU4mJVp7ftn5ctPA3AoGcQsPo14fahRV2VuDa9cpJGFkkwvp83JRbak3bLkADRiJiBsMQLCtsxh00Gma6UWcD");
+const stripePromise = loadStripe(
+  "pk_test_51Q2glIK3wgFMMLU4mJVp7ftn5ctPA3AoGcQsPo14fahRV2VuDa9cpJGFkkwvp83JRbak3bLkADRiJiBsMQLCtsxh00Gma6UWcD"
+);
 
 const Routing = () => {
   return (
@@ -17,12 +20,32 @@ const Routing = () => {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/auth" element={<Auth />} />
-        <Route path="/payments" element={
-          <Elements stripe={stripePromise}>
-            <Payment />
-          </Elements>
-        } />
-        <Route path="/orders" element={<Orders />} />
+        <Route
+          path="/payments"
+          element={
+            <ProtectedRoute
+              msg={"you must Login to pay"}
+              redirect={"/payments"}
+            >
+              <Elements stripe={stripePromise}>
+                <Payment />
+              </Elements>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute
+              msg={"you must Login to access your orders"}
+              redirect={"/orders"}
+            >
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/category/:categoryName" element={<Results />} />
         <Route path="/product/:productId" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
@@ -38,13 +61,6 @@ const NotFound = () => {
 };
 
 export default Routing;
-
-
-
-
-
-
-
 
 //  import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Landing from "./Pages/Landing/Landing";

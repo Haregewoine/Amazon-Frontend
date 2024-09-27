@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import classes from "./Signup.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import { auth } from "../../utility/Fairebase";
 import {
   signInWithEmailAndPassword,
@@ -21,10 +21,13 @@ function Auth() {
 
   const [{ user }, dispatch] = useContext(DataContext);
   const navigate = useNavigate();
-  //console.log(user);
+
+  const navStateData = useLocation();
+    
+  // console.log(navStateData);
   const authHandler = async (e) => {
     e.preventDefault(); // Fixing the typo
-    console.log(e.target.name);
+    //  console.log(e.target.name);
 
     if (e.target.name === "signIn") {
       setLoading({ ...Loading, signIn: true });
@@ -32,11 +35,11 @@ function Auth() {
       signInWithEmailAndPassword(auth, email, password)
         .then((userInfo) => {
           dispatch({
-            type: Type.set_user,
+            type: Type.SET_USER,
             user: userInfo.user,
           });
           setLoading({ ...Loading, signIn: false });
-          navigate("/");
+          navigate(navStateData?.state?.redirect ||"/");
         })
         .catch((err) => {
           setError(err.message);
@@ -48,12 +51,12 @@ function Auth() {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userInfo) => {
           dispatch({
-            type: Type.set_user,
+            type: Type.SET_USER,
             user: userInfo.user,
           });
           setLoading({ ...Loading, signup: false });
 
-          navigate("/");
+           navigate(navStateData?.state?.redirect ||"/");
         })
 
         .catch((err) => {
@@ -76,6 +79,21 @@ function Auth() {
       {/* form */}
       <div className={classes.login__container}>
         <h1> Sign In</h1>
+
+        {navStateData?.state?.msg && (
+          <small
+            style={{
+              padding: "5px",
+              textAlign: "center",
+              color: "red",
+              fontWeight: "bold",
+            }}
+          >
+            {navStateData.state.msg}
+          </small>
+        )}
+
+        {/* form */}
         <form action="">
           <div>
             <label htmlFor="email">Email</label>

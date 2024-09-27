@@ -14,12 +14,12 @@ function App() {
       if (authUser) {
         // console.log(authUser);
         dispatch({
-          type: Type.set_user,
+          type: Type.SET_USER,
           user: authUser,
         });
       } else {
         dispatch({
-          type: Type.set_user,
+          type: Type.SET_USER,
           user: null,
         });
       }

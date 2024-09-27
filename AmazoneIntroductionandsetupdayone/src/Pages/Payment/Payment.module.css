@@ -17,7 +17,7 @@
 .flex h3 {
   min-width: 300px;
 }
- 
+
 .flex img {
   width: 80px !important;
 }
@@ -25,15 +25,15 @@
 .flex div {
   height: auto !important;
 }
- .payment__card__container {
+.payment__card__container {
   max-width: 350px;
   width: 100%;
 }
 
- .payment__details {
+.payment__details {
   font-size: 20px;
-}  
- .payment__price {
+}
+.payment__price {
   padding: 20px;
 }
 .payment__price > div {
@@ -66,4 +66,4 @@
   .flex {
     flex-direction: column;
   }
-} 
+}
