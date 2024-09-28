@@ -35,11 +35,11 @@ const Routing = () => {
         />
 
         <Route
-          path="/orders"
+          path="/Orders"
           element={
             <ProtectedRoute
-              msg={"you must Login to access your orders"}
-              redirect={"/orders"}
+              msg={"you must Login to access your Orders"}
+              redirect={"/Orders"}
             >
               <Orders />
             </ProtectedRoute>
@@ -86,7 +86,7 @@ export default Routing;
 //             <Payment />
 //           </Elements>
 //         } />
-//         <Route path="/orders" element={<Orders />} />
+//         <Route path="/Orders" element={<Orders />} />
 //         <Route path="/category/:categoryName" element={<Results />} />
 //         <Route path="/product/:productId" element={<ProductDetail />} />
 //         <Route path="/cart" element={<Cart />} />

@@ -6,16 +6,19 @@ import { DataContext } from "../../Component/DataProvider/DataProvider";
 import { useContext, useState } from "react";
 import ProductCard from "../../Component/Product/ProductCard";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
-import { axiosInstance } from "../../Api/axios.jsx";
+import { axiosInstance } from "../../Api/axios";
 import { ClipLoader } from "react-spinners";
-import { db } from "../../utility/Fairebase.jsx";
+import { db } from "../../utility/Fairebase";
 import { useNavigate } from "react-router-dom";
+import { Type } from "../../utility/action.type";
 function Payment() {
   const [{ basket, user }, dispatch] = useContext(DataContext);
   //console.log(user);
-  const totalItem = basket?.reduce((amount, item) => item.amount + amount, 0);
+  const totalItem = basket?.reduce((amount, item) => {
+    return item.amount + amount;
+  }, 0);
 
-  const total = basket.reduce((amount, item) => {
+  const total = basket?.reduce((amount, item) => {
     return item.price * item.amount + amount;
   }, 0);
 
@@ -28,7 +31,7 @@ function Payment() {
 
   const handleChange = (e) => {
     // console.log(e);
-    e?.error?.message?.setCardError(e?.error?.message);
+    e?.error?.message?setCardError(e?.error?.message):
     setCardError("");
   };
 
@@ -38,10 +41,10 @@ function Payment() {
       setprocessing(true);
       // backend call to get client secret
       const response = await axiosInstance({
-        method: "post",
-        url: `/payments/create?total=${total * 100}`,
-      });
-
+        method: "POST",
+        url: `/payment/create?total=${total*100}`,
+      });
+      
       // console.log(response.data);
       const clientSecret = response.data?.clientSecret;
 
@@ -55,9 +58,9 @@ function Payment() {
       // console.log(paymentIntent);
       // //3. after the the confirmation ---->order firestore database save,clear basket);
       await db
-        .collection("users")
-        .doc(user?.uid)
-        .collection("orders")
+        // .collection("users").doc(user?.uid)
+        .collection("users").doc(user.uid)
+        .collection("Orders")
         .doc(paymentIntent.id)
         .set({
           basket: basket,
@@ -70,9 +73,9 @@ function Payment() {
       });
 
       setprocessing(false);
-      navigate("/orders", { state: { msg: "you have placed new order" } });
+      navigate("/Orders", { state: { msg: "you have placed new order" } });
     } catch (error) {
-      console.error(error);
+      console.log(error);
       setprocessing(false);
     }
   };
@@ -136,7 +139,7 @@ function Payment() {
                     {processing ? (
                       <div classesName={classes.loading}>
                         <ClipLoader color="gray" size={12} />
-                        <P>please wait...</P>
+                        <p>please wait...</p>
                       </div>
                     ) : (
                       "Pay Now"
@@ -154,90 +157,3 @@ function Payment() {
 
 export default Payment;
 
-//   const handleChange = (e) => {
-//     console.log(e);
-//     e?.error?.message?.setCardError(e?.error?.message);
-//     setCardError("");
-//   };
-//   const handlepayment = async (e) => {
-// e.preventDefault();
-// try {
-//  // backend|| function-->contact to the client secret
-//   const response = await axiosInstance({
-//     method:"post",
-//     url: `/payments/create?total =>${total}`,
-//   });
-
-//   console.log(response.data)
-
-// } catch (error) {
-
-// }
-
-// }
-
-// //2.clinet side (react side confirmation
-
-// // after the the confirmation ---->order firestore database save,clear basket);
-
-//   };
-
-//   return (
-//     <Layout>
-//       {/* header */}
-//       <div className={classes.payment__header}>checkout ({totalItem})items</div>
-//       {/* payment method*/}
-
-//       <section className={classes.payment}>
-//         {/* address */}
-//         <div className={classes.flex}>
-//           <h3>Delivery address</h3>
-//           <div>
-//             <div>makeda@email.com</div>
-//             <div>123 React Lane</div>
-//             <div>virginia</div>
-//           </div>
-//         </div>
-//         <hr />
-//         {/* product */}
-//         <div className={classes.flex}>
-//           <h3>Review items and delivery</h3>
-//           <div>
-//             {basket?.map((item) => (
-//               <ProductCard product={item} flex={true} />
-//             ))}
-//           </div>
-//         </div>
-//         <hr />
-//         {/* card form */}
-//         <div className={classes.flex}>
-//           <h3>Payment method</h3>
-//           <div className={classes.payment__card__container}>
-//             <div className={classes.payment__details}>
-//               <form onSubmit={handlepayment}>
-//                 {/* error */}
-//                 {cardError && (
-//                   <small style={{ color: "red" }}>{cardError}</small>
-//                 )}
-//                 {/* card element */}
-//                 <CardElement onChange={handleChange} />
-
-//                 {/* price */}
-//                 <div className={classes.payment__price}>
-//                   <div>
-//                     <span style={{ display: "flex", gap: "10px" }}>
-//                       <p>Total Order |</p> <currencyFormat amount={total} />
-//                     </span>
-//                   </div>
-
-//                   <button type="submit">pay Now</button>
-//                 </div>
-//               </form>
-//             </div>
-//           </div>
-//         </div>
-//       </section>
-//     </Layout>
-//   );
-
-// export default Payment;

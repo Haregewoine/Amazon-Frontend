@@ -1,50 +1,39 @@
-
-
-.Category_container {
-  display: flex;              /* Enable flexbox for the container */
-  flex-wrap: wrap;            /* Allow items to wrap to the next line if needed */
-  gap: 20px; 
-                   /* Add space between the items */
-  justify-content: space-around; /* Distribute the items with space between them */
-  
-}
-
-.category {
-  flex: 1 1 200px;            /* Set the flex-basis to ensure each item takes a minimum width */
-  max-width: 250px;           /* Set a maximum width for each item */
-  text-align: center;         /* Center the text and content */
-}
-
-.category img {
-  width: 100%;                /* Make the image take up the full width of its container */
-  height: auto;               /* Maintain the aspect ratio */
-}
-.category a {
-    text-decoration: none;
-    color: rgb(35,35,35);
-}
-
-.category h2 {
-  font-size: 1.2rem;
-  margin: 10px 0;
-}
-
- .category p {
-  margin-top: 10px;
-  font-weight: bold;
-  color: #007bff;
-  cursor: pointer;
-}
 .category {
   height: 350px;
   width: 350px;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-} 
+}
 
- .category img {
+.category img {
   width: 100%;
   object-fit: contain;
   max-height: 250px;
   padding: 0px 10px;
-} 
+}
+.category a {
+  text-decoration: none;
+  color: rgb(35, 35, 35);
+}
+.category h2,
+.category p {
+  padding: 5px;
+  margin-left: 15px;
+}
+.category p {
+  font-size: 12px;
+  font-weight: bold;
+  color: rgb(9, 132, 209);
+}
+
+.category_container {
+  position: relative;
+  margin-top: -10%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 1600px;
+  gap: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  place-items: center;
+}
