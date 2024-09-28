@@ -4,7 +4,7 @@ import classes from './ProductDetail.module.css'
 import Layout from '../../Component/Layout/Layout'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { productUrl } from '../../Api/EndPoint.jsx'
+import { productUrl } from '../../Api/EndPoint'
 import ProductCard from '../../Component/Product/ProductCard'
 import Loading from '../../Component/Loading/Loading.jsx'
 

@@ -18,8 +18,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { DataProvider } from "./Component/DataProvider/DataProvider.jsx";
-import { initialState, reducer } from "./utility/reducer.jsx";
+import { DataProvider } from "./Component/DataProvider/DataProvider";
+import { initialState, reducer } from "./utility/reducer";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

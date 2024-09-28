@@ -15,6 +15,6 @@ const ProtectedRoute = ({ children, msg, redirect }) => {
   return children;
 };
 
-//payment------>/auth(/)
+// pyament ---> /auth (/)
 
 export default ProtectedRoute;

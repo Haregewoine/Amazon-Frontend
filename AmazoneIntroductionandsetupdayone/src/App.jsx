@@ -1,10 +1,8 @@
-import React, { useEffect,useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import Routing from "./Router.jsx";
-//import { DataContext } from "./utility/DataProvider.jsx";
-import { Type } from "./utility/action.type.jsx";
-import { auth } from "./utility/Fairebase.jsx";
-import { DataContext } from "./Component/DataProvider/DataProvider.jsx";
-
+import { auth } from "./Utility/Fairebase.js";
+import { DataContext } from "./Component/DataProvider/DataProvider";
+import { Type } from "./utility/action.type.js";
 
 function App() {
   const [{ user }, dispatch] = useContext(DataContext);
@@ -12,22 +10,21 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        // console.log(authUser);
+        console.log(authUser);
         dispatch({
           type: Type.SET_USER,
           user: authUser,
         });
       } else {
-        dispatch({
-          type: Type.SET_USER,
-          user: null,
-        });
+        dispatch({ type: Type.SET_USER, user: null });
       }
     });
   }, []);
-
-  return <Routing />;
+  return (
+    <>
+      <Routing />
+    </>
+  );
 }
 
 export default App;
-

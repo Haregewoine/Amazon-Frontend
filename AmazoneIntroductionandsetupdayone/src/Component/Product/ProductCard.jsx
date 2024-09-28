@@ -5,23 +5,27 @@ import CurrencyFormat from "../CurrencyFormat/CurrencyFormat.jsx";
 import { Link } from "react-router-dom";
 import { img } from "../Carousel/img/data.jsx";
 import { DataContext } from "../DataProvider/DataProvider.jsx";
-import { Type } from "../../utility/action.type";
+import { Type } from "../../utility/action.type.js";
 
 
 
-function ProductCard({ product, flex, renderDesc }) {
-  const { image,title,id,rating,price,description} = product;
+function ProductCard({ product, flex, renderDesc, renderAdd }) {
+  const { image, title, id, rating, price, description } = product;
 
-  const[state,dispatch]=useContext(DataContext)
-  const addToCart=()=>{
+  const [state, dispatch] = useContext(DataContext);
+  const addToCart = () => {
     dispatch({
       type: Type.ADD_TO_BASKET,
-      item:{
-        image,title,id,rating,price,description
-      }
-    })
-  }
-
+      item: {
+        image,
+        title,
+        id,
+        rating,
+        price,
+        description,
+      },
+    });
+  };
 
   return (
     <div
@@ -44,10 +48,11 @@ function ProductCard({ product, flex, renderDesc }) {
           <CurrencyFormat amount={price} />
         </div>
 
-        
-        <button className={classes.button} onClick={() => addToCart(product)}>
-          Add to Cart
-        </button>
+        {renderAdd && (
+          <button className={classes.button} onClick={addToCart}>
+            add to cart
+          </button>
+        )}
       </div>
     </div>
   );

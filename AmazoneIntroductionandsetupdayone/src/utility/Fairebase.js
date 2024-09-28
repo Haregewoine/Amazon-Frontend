@@ -1,8 +1,11 @@
-
+import firebase from "firebase/compat/app";
+import { getAuth } from "firebase/auth";
+import "firebase/compat/firestore";
+import "firebase/compat/auth";
 // Import the necessary Firebase components
-import { initializeApp } from "firebase/app"; // Use the new modular import
-import { getAuth } from "firebase/auth"; // Modular import for auth
-import { getFirestore } from "firebase/firestore"; // Modular import for Firestore
+// import { initializeApp } from "firebase/app"; // Use the new modular import
+// import { getAuth } from "firebase/auth"; // Modular import for auth
+// import { getFirestore } from "firebase/firestore"; // Modular import for Firestore
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -15,39 +18,13 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase app
-const app = initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
+//const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase services
 export const auth = getAuth(app); // Use the app instance to get Auth
-export const db = getFirestore(app); // Use the app instance to get Firestore
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//export const db = getFirestore(app); // Use the app instance to get Firestore
+export const db = app.firestore();
 
 // import { getAuth } from "firebase/app";
 // // we need this to use authantication service from firebase .
@@ -69,4 +46,3 @@ export const db = getFirestore(app); // Use the app instance to get Firestore
 // const app = firebase.initializeApp(firebaseConfig);
 // export const auth = getAuth(app);
 // export const db = app.firestore()
-
