@@ -11,8 +11,15 @@ import {auth} from '../../utility/Fairebase'
 const Header = () => {
   const [{ basket, user }, dispatch] = useContext(DataContext);
 {console.log(user)
-}  const totalItem =
-    basket?.reduce((amount, item) =>  item.amount + amount, 0) || 0;
+}  
+const totalItem =
+  basket?.reduce(
+    (amount, item) => (item.amount ? item.amount + amount : amount),
+    0
+  ) || 0;
+
+// const totalItem =
+//     basket?.reduce((amount, item) =>  item.amount + amount, 0) || 0;
 
   return (
     <section className={classes.fixed}>
