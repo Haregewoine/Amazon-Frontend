@@ -10,7 +10,7 @@ import { axiosInstance } from "../../Api/axios";
 import { ClipLoader } from "react-spinners";
 import { db } from "../../utility/Fairebase";
 import { useNavigate } from "react-router-dom";
-import { Type } from "../../Utility/action.type";
+import { Type } from "../../utility/action.type";
 function Payment() {
   const [{ basket, user }, dispatch] = useContext(DataContext);
   //console.log(user);
