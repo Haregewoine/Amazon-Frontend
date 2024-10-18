@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
   //deployed version of firebase function
   //baseURL:"https://api-nvrrtywamq-uc.a.run.app"
   //deployed version of amazon server on render.com
-  baseURL: "https://amazon-api-deploy-3-ccmr.onrender.com/",
+  baseURL: "https://amazon-api-deploy-3-ccmr.onrender.com",
   //baseURL: "http://127.0.0.1:5000/clone-fcd01/us-central1/api",
 });
 
