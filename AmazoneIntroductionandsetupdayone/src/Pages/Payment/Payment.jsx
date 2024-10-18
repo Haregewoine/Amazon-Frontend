@@ -10,7 +10,7 @@ import { axiosInstance } from "../../Api/axios";
 import { ClipLoader } from "react-spinners";
 import { db } from "../../utility/Fairebase";
 import { useNavigate } from "react-router-dom";
-import { Type } from "../../utility/action.type";
+import { Type } from "../../Utility/action.type";
 function Payment() {
   const [{ basket, user }, dispatch] = useContext(DataContext);
   //console.log(user);
@@ -31,8 +31,7 @@ function Payment() {
 
   const handleChange = (e) => {
     // console.log(e);
-    e?.error?.message?setCardError(e?.error?.message):
-    setCardError("");
+    e?.error?.message ? setCardError(e?.error?.message) : setCardError("");
   };
 
   const handlepayment = async (e) => {
@@ -42,9 +41,9 @@ function Payment() {
       // backend call to get client secret
       const response = await axiosInstance({
         method: "POST",
-        url: `/payment/create?total=${total*100}`,
-      });
-      
+        url: `/payment/create?total=${total * 100}`,
+      });
+
       // console.log(response.data);
       const clientSecret = response.data?.clientSecret;
 
@@ -59,7 +58,8 @@ function Payment() {
       // //3. after the the confirmation ---->order firestore database save,clear basket);
       await db
         // .collection("users").doc(user?.uid)
-        .collection("users").doc(user.uid)
+        .collection("users")
+        .doc(user.uid)
         .collection("Orders")
         .doc(paymentIntent.id)
         .set({
@@ -156,4 +156,3 @@ function Payment() {
 }
 
 export default Payment;
-
